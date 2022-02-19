@@ -16,6 +16,7 @@ class TypeWorkController extends ResourceController
     public function index()
     {
         $data = $this->model
+        ->select(['id', 'name', 'description'])
         ->asObject()
         ->get()
         ->getResult();

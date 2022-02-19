@@ -11,15 +11,15 @@ class IndicatorSeeder extends  Seeder
     {
         $data = [
             [
-                'percentage'      => '60.00',
+                'percentage'      =>  60.00,
                 'description'     => 'Puntaje critico'
             ],
             [
-                'percentage'      => '100.00',
+                'percentage'      => 100.00,
                 'description'     => 'Puntaje Estandar'
             ],
             [
-                'percentage'      => '12.00',
+                'percentage'      => 120.00,
                 'description'     => 'Puntaje Extraordinario'
             ],
         ];

@@ -16,6 +16,7 @@ class IndicatorController extends ResourceController
     public function index()
     {
         $data = $this->model
+        ->select(['id', 'percentage', 'description'])
         ->asObject()
         ->get()
         ->getResult();

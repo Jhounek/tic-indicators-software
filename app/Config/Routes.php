@@ -42,7 +42,7 @@ $routes->group('api/v1', function($routes) {
     $routes->resource('employees', ['controller' => 'Api\EmployeeController']);
     $routes->resource('employee_periods', ['controller' => 'Api\EmployeePeriodController']);
     $routes->resource('type_works', ['controller' => 'Api\TypeWorkController']);
-    $routes->resource('indicators', ['controller' => 'Api\TypeWorkController']);
+    $routes->resource('indicators', ['controller' => 'Api\IndicatorController']);
 });
 
 /*

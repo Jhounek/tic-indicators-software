@@ -17,7 +17,7 @@ class Indicator extends Model
 
     protected $allowedFields = [
         'id',
-        'name',
+        'percentage',
         'description'
     ];
 
