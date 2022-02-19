@@ -33,6 +33,18 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+
+$routes->group('api/v1', function($routes) {
+    $routes->resource('type_document_identifications', ['controller' => 'Api\TypeDocumentIdentificationController']);
+    $routes->resource('periods', ['controller' => 'Api\PeriodController']);
+    $routes->resource('teams', ['controller' => 'Api\TeamController']);
+    $routes->resource('roles', ['controller' => 'Api\RoleController']);
+    $routes->resource('employees', ['controller' => 'Api\EmployeeController']);
+    $routes->resource('employee_periods', ['controller' => 'Api\EmployeePeriodController']);
+    $routes->resource('type_works', ['controller' => 'Api\TypeWorkController']);
+    $routes->resource('indicators', ['controller' => 'Api\TypeWorkController']);
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
