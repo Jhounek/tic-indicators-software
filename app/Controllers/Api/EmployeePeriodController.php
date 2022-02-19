@@ -15,12 +15,13 @@ class EmployeePeriodController extends ResourceController
 
     public function index()
     {
-        $data = $this->model
-        ->asObject()
-        ->get()
-        ->getResult();
+        $data = $this->model->asObject();
         
-        return $this->respond(['status' => 200, 'data' => $data]);
+        return $this->respond([
+            'status'        => 200, 
+            'data'          => $data->paginate(10), 
+            'paginate'      => $data->pager->getDetails()
+        ]);
     }
 
 
