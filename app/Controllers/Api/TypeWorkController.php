@@ -27,7 +27,7 @@ class TypeWorkController extends ResourceController
 
     public function new()
     {
-    
+        
     }
 
 
