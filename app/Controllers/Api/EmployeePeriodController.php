@@ -18,7 +18,22 @@ class EmployeePeriodController extends ResourceController
 
     public function index()
     {
-        $data = $this->model->asObject();
+        $data = $this->model->select([
+            'employees.name as employee_name',
+            'employees.identification_number',
+            'roles.name as role_name',
+            'month',
+            'year',
+            'projected_activity',
+            'activity_executed',
+            'standard_value',
+            'critical_value'
+            '(standard_value / critical_value) as percentage_compliance' 
+        ])
+        ->join('employees', 'employees.id = employee_period.employee_id')
+        ->join('roles', 'employees.role_id = roles.id')
+        ->join('periods', 'employees.period_id = periods.id')
+        ->asObject();
         
         return $this->respond([
             'status'        => 200, 

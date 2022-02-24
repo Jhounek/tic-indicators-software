@@ -12,7 +12,6 @@ class TeamsTable extends Migration
             'id'            => ['type' => 'BIGINT', 'constraint' => 20, 'unsigned'=> true, 'auto_increment' => true],
             'name'          => ['type' => 'VARCHAR', 'constraint' => '191', 'null' => true],
             'description'   => ['type' => 'VARCHAR', 'constraint' => '191', 'null' => true],
-            'is_leader'     => ['type' => 'ENUM("True","False")', 'default' => 'False',  'null' => true],
             'created_at'    => ['type' => 'TIMESTAMP', 'null' => true],
             'updated_at'    => ['type' => 'TIMESTAMP', 'null' => true],
             'deleted_at'    => ['type' => 'TIMESTAMP', 'null' => true],
