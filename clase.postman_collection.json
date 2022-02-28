@@ -36,7 +36,41 @@
 					"name": "Index",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/periods",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"periods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/periods",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"periods"
+							]
+						}
 					},
 					"response": []
 				}
@@ -49,7 +83,20 @@
 					"name": "index",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/teams",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams"
+							]
+						}
 					},
 					"response": []
 				}
@@ -62,7 +109,20 @@
 					"name": "index",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/employees",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employees"
+							]
+						}
 					},
 					"response": []
 				}
@@ -72,10 +132,107 @@
 			"name": "Empleado_Period",
 			"item": [
 				{
-					"name": "Index",
+					"name": "Proyectos",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/employee_periods",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employee_periods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disposicion de servicios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/provision_services",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"provision_services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Niveles de servicios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/service_levels",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service_levels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa de ayuda",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/help_table",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"help_table"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pesos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/pesos",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pesos"
+							]
+						}
 					},
 					"response": []
 				}
@@ -88,7 +245,20 @@
 					"name": "indicadores",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/indicators",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"indicators"
+							]
+						}
 					},
 					"response": []
 				}
@@ -101,7 +271,20 @@
 					"name": "Index",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/roles",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles"
+							]
+						}
 					},
 					"response": []
 				}
@@ -114,7 +297,20 @@
 					"name": "Index",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://clase.test/api/v1/type_works",
+							"protocol": "http",
+							"host": [
+								"clase",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"type_works"
+							]
+						}
 					},
 					"response": []
 				}

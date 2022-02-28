@@ -41,6 +41,11 @@ $routes->group('api/v1', function($routes) {
     $routes->resource('roles', ['controller' => 'Api\RoleController']);
     $routes->resource('employees', ['controller' => 'Api\EmployeeController']);
     $routes->resource('employee_periods', ['controller' => 'Api\EmployeePeriodController']);
+    $routes->get('provision_services',  'Api\EmployeePeriodController::provisionServices');
+    $routes->get('service_levels',  'Api\EmployeePeriodController::serviceLevels');
+    $routes->get('projects',  'Api\EmployeePeriodController::projects');
+    $routes->get('help_table',  'Api\EmployeePeriodController::helpTable');
+    $routes->get('pesos',  'Api\EmployeePeriodController::pesos');
     $routes->resource('type_works', ['controller' => 'Api\TypeWorkController']);
     $routes->resource('indicators', ['controller' => 'Api\IndicatorController']);
 });
