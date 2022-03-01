@@ -17,8 +17,21 @@ class EmployeePeriod extends Model
 
     protected $allowedFields = [
         'id',
-        'name',
-        'description'
+        'employee_id',
+        'period_id',
+        'type_work_id',
+        'projected_activity',
+        'activity_executed',
+        'standard_value',
+        'critical_value',
+        'total_hours',
+        'failures_hours',
+        'previous_cases',
+        'cumplimiento_actividades',
+        'help_table',
+        'provision_services',
+        'service_levels',
+        'next_cases'
     ];
 
 

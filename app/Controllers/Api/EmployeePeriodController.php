@@ -49,7 +49,11 @@ class EmployeePeriodController extends ResourceController
             $employees['percentage_compliance'] =  number_format($data['activity_executed']/$data['projected_activity'], 2);
             $employees['d']                     =  number_format(($this->indicators['EST'] - $this->indicators['CRI']) / ($data['standard_value']  - $data['critical_value']), 2 );
             $employees['c']                     =  number_format(($this->indicators['EST'] - $employees['d'] * $data['standard_value'] )* 0.01, 2 );
-            $employees['percentage_obtained']   =  number_format(($employees['c'] + $employees['d'] *   $employees['percentage_compliance']) * 100, 2);
+            if( ($employees['percentage_compliance']*100) >= $data['critical_value'] && ($employees['percentage_compliance']*100) <= $data['standard_value']) {
+                $employees['percentage_obtained']   =  number_format(($employees['c'] + $employees['d'] *   $employees['percentage_compliance']) * 100, 2);
+            }else {
+                $employees['percentage_obtained']   = 0;
+            }
             return json_encode([
                 'status'        => 200, 
                 'data'          => $employees
@@ -60,10 +64,14 @@ class EmployeePeriodController extends ResourceController
         $i = 0;
         foreach($data->paginate(10) as $item) {
             $employees[$i] = $item;
-            $employees[$i]['percentage_compliance'] =  number_format($item['activity_executed']/$item['projected_activity'], 2);
+            $employees[$i]['percentage_compliance'] =  number_format(($item['activity_executed']/$item['projected_activity']), 2);
             $employees[$i]['d']                     =  number_format(($this->indicators['EST'] - $this->indicators['CRI']) / ($item['standard_value']  - $item['critical_value']), 2 );
             $employees[$i]['c']                     =  number_format(($this->indicators['EST'] - $employees[$i]['d'] * $item['standard_value'] )* 0.01, 2 );
-            $employees[$i]['percentage_obtained']   =  number_format(($employees[$i]['c'] + $employees[$i]['d'] *   $employees[$i]['percentage_compliance']) * 100, 2);
+            if(($employees[$i]['percentage_compliance']*100) >= $item['critical_value'] && ($employees[$i]['percentage_compliance']* 100) <= $item['standard_value']) {
+                $employees[$i]['percentage_obtained']   =  number_format(($employees[$i]['c'] + $employees[$i]['d'] *   $employees[$i]['percentage_compliance']) *100, 2);
+            }else {
+                $employees[$i]['percentage_obtained']  = 0;
+            }
             $i++;
         }
         
@@ -104,7 +112,12 @@ class EmployeePeriodController extends ResourceController
             $employees['percentage_compliance'] =  number_format($data['activity_executed']/$data['projected_activity'], 2);
             $employees['d']                     =  number_format(($this->indicators['EST'] - $this->indicators['CRI']) / ($data['standard_value']  - $data['critical_value']), 2 );
             $employees['c']                     =  number_format(($this->indicators['EST'] - $employees['d'] * $data['standard_value'] )* 0.01, 2 );
-            $employees['percentage_obtained']   =  number_format(($employees['c'] + $employees['d'] *   $employees['percentage_compliance']) * 100, 2);
+            if(($employees['percentage_compliance'] * 100) >= $data['critical_value'] && ($employees['percentage_compliance']* 100) <= $data['standard_value']) {
+                $employees['percentage_obtained']   =  number_format(($employees['c'] + $employees['d'] *   $employees['percentage_compliance']) * 100, 2);
+            }else {
+                $employees['percentage_obtained']   = 0;
+            }
+           
             return json_encode([
                 'status'        => 200, 
                 'data'          => $employees
@@ -117,7 +130,11 @@ class EmployeePeriodController extends ResourceController
             $employees[$i]['percentage_compliance'] =  number_format($item['activity_executed']/$item['projected_activity'], 2);
             $employees[$i]['d']                     =  number_format(($this->indicators['EST'] - $this->indicators['CRI']) / ($item['standard_value']  - $item['critical_value']), 2 );
             $employees[$i]['c']                     =  number_format(($this->indicators['EST'] - $employees[$i]['d'] * $item['standard_value'] )* 0.01, 2 );
-            $employees[$i]['percentage_obtained']   =  number_format(($employees[$i]['c'] + $employees[$i]['d'] *   $employees[$i]['percentage_compliance']) * 100, 2);
+            if(($employees[$i]['percentage_compliance'] * 100) >= $item['critical_value'] && ($employees[$i]['percentage_compliance']* 100) <= $item['standard_value']) {
+                $employees[$i]['percentage_obtained']   =  number_format(($employees[$i]['c'] + $employees[$i]['d'] *   $employees[$i]['percentage_compliance'])*100, 2);
+            }else {
+                $employees[$i]['percentage_obtained']   = 0;
+            }
             $i++;
         }
         
@@ -134,13 +151,8 @@ class EmployeePeriodController extends ResourceController
     {
         $input = $this->getRequestInput($this->request);
         $validate = $this->validateRequest($input, [
-            'employee_id'                               => 'required|integer',
-            'period_id'                                 => 'required|integer',
-            'type_work_id'                              => 'required|integer',
-            'projected_activity'                        => 'required|max_length[45]|is_unique[employees.identification_number,id]',
-            'activity_executed'                         => 'required|max_length[191]',
-            'standard_value'                            =>  '', 
-            'critical_value'                            =>  '',
+            'period_id'                                 => 'required',
+            'type_work_id'                              => 'required'
         ]);
 
         if(!$validate) {
@@ -161,8 +173,6 @@ class EmployeePeriodController extends ResourceController
         $data = $this->model->select([
             'periods.monht',
             'periods.year',
-            'projected_activity',
-            'activity_executed',
             'standard_value',
             'critical_value',
             'total_hours',
@@ -172,11 +182,17 @@ class EmployeePeriodController extends ResourceController
         ->join('periods', 'employee_period.period_id = periods.id')
         ->first();
 
+
         $provision = $data;
-        $provision['achieved_goals'] = number_format((($data['total_hours'] - $data['failures_hours']) /$data['total_hours'])*100, 0);
+        $provision['achieved_goals'] = number_format((($data['total_hours'] - $data['failures_hours']) / $data['total_hours'])*100, 0);
         $provision['d']              = number_format(($this->indicators['EST'] - $this->indicators['CRI']) / ($data['standard_value'] - $data['critical_value']),2);
         $provision['c']              = number_format(($this->indicators['EST'] - $provision['d'] * $data['standard_value']) * 0.01, 2);
-        $provision['points']         = number_format(($provision['c'] + $provision['d'] * ($provision['achieved_goals'] * 0.01)), 2);     
+        if($provision['achieved_goals'] >= $data['critical_value'] && $provision['achieved_goals'] <= $data['standard_value'] ) {
+            $provision['points'] = number_format(($provision['c'] + ($provision['d'] * ('0.'.$provision['achieved_goals']))) * 100 - 4, 2);   
+        }else {
+            $provision['points'] = 0;
+        }
+         
 
 
         return json_encode(['status' => 201 ,'data' => $provision]);
@@ -188,8 +204,6 @@ class EmployeePeriodController extends ResourceController
         $data = $this->model->select([
             'periods.monht',
             'periods.year',
-            'projected_activity',
-            'activity_executed',
             'standard_value',
             'critical_value',
             'total_hours',
@@ -205,7 +219,12 @@ class EmployeePeriodController extends ResourceController
         $provision['achieved_goals'] = number_format($data['total_hours'] / ($data['failures_hours'] + $data['previous_cases'] - $data['next_cases']) *100, 0);
         $provision['d']              = number_format(($this->indicators['EST'] - $this->indicators['CRI']) / ($data['standard_value'] - $data['critical_value']),2);
         $provision['c']              = number_format(($this->indicators['EST'] - $provision['d'] * $data['standard_value']) * 0.01, 2);
-        $provision['points']         = number_format(($provision['c'] + $provision['d'] * ($provision['achieved_goals'] * 0.01)), 2); 
+        if($provision['achieved_goals'] >= $data['critical_value'] && $provision['achieved_goals'] && $data['standard_value']) {
+            $provision['points']         = number_format(($provision['c'] + $provision['d'] * ($provision['achieved_goals'] * 0.01)), 2); 
+        }else {
+            $provision['points']         = 0;
+        }
+      
 
         return json_encode(['status' => 201 ,'data' => $provision]);
     }
@@ -239,8 +258,9 @@ class EmployeePeriodController extends ResourceController
             $employees[$i] = $item;
             $employees[$i]['provision_services_total']  = $provisionServices->data->points;
             $employees[$i]['service_levels_total']      = $serviceLevels->data->points;
-            $employees[$i]['project_totals']            =  json_decode($this->projects())->data[0]->percentage_obtained;
-            $employees[$i]['help_table_totals']         =  json_decode($this->helpTable())->data[0]->percentage_obtained;
+            $employees[$i]['project_totals']            = json_decode($this->projects())->data[0]->percentage_obtained;
+            $employees[$i]['help_table_totals']         = json_decode($this->helpTable())->data[0]->percentage_obtained;
+            $employees[$i]['bonuses']                   = number_format((($employees[$i]['project_totals'] * $item['cumplimiento_actividades'])* 0.01) + (($employees[$i]['help_table_totals'] * $item['help_table']) * 0.01)+(($employees[$i]['provision_services_total'] * $item['provision_services']) *0.01) + ( ($employees[$i]['service_levels_total'] * $item['service_levels'])*0.01), 2);
             $i++;
         }
         
